@@ -1,0 +1,23 @@
+{
+  "name": "appointment-booking",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacquesMartial/appointment-booking.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jacquesMartial/appointment-booking/issues"
+  },
+  "homepage": "https://github.com/jacquesMartial/appointment-booking#readme",
+  "dependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
