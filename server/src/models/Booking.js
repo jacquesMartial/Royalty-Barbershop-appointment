@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose");
-const { Booking } = require(".");
 
 const bookingSchema = new Schema({
   date: {
