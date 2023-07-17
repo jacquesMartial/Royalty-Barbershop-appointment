@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 
-import { CREATE_BOOKING } from "../../utils/mutations";
+import { ADD_BOOKING } from "../../utils/mutations";
 import { QUERY_BOOKINGS } from "../../utils/queries";
 
 const BookingForm = () => {
@@ -43,7 +43,7 @@ const BookingForm = () => {
 
   return (
     <div>
-      <h3>Add yourself to the list...</h3>
+      <h3>Book an appointment</h3>
       <form
         className="flex-row justify-center justify-space-between-md align-center"
         onSubmit={handleFormSubmit}
