@@ -17,19 +17,6 @@ const Booking = () => {
   // if (loading) {
   //   return <div>Loading...</div>;
   // }
-  return (
-    <div>
-      <h2 className="card-header">
-        {/* {booking.name}'s friends have endorsed these skills... */}
-      </h2>
-
-      {/* {booking.skills?.length > 0 && <SkillsList skills={booking.skills} />} */}
-
-      <div className="my-4 p-4" style={{ border: "1px dotted #1a1a1a" }}>
-        {/* <SkillForm bookingId={booking._id} /> */}
-      </div>
-    </div>
-  );
 };
 
 export default Booking;

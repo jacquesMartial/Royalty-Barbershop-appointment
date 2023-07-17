@@ -3,35 +3,19 @@ import { useMutation } from "@apollo/client";
 
 import { ADD_BOOKING } from "../../utils/mutations";
 import { QUERY_BOOKINGS } from "../../utils/queries";
+import { Link } from "react-router-dom";
 
 const BookingForm = () => {
   const [name, setName] = useState("");
 
-  const [addBooking, { error }] = useMutation(ADD_BOOKING, {
-    // The update method allows us to access and update the local cache
-    update(cache, { data: { addBooking } }) {
-      try {
-        // First we retrieve existing booking data that is stored in the cache under the `QUERY_BOOKINGS` query
-        // Could potentially not exist yet, so wrap in a try/catch
-        const { bookings } = cache.readQuery({ query: QUERY_BOOKINGS });
-
-        // Then we update the cache by combining existing booking data with the newly created data returned from the mutation
-        cache.writeQuery({
-          query: QUERY_BOOKINGS,
-          // If we want new data to show up before or after existing data, adjust the order of this array
-          data: { bookings: [...bookings, addBooking] },
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    },
-  });
+  const [createBooking, { error }] = useMutation(ADD_BOOKING
+  );
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const { data } = addBooking({
+      const { data } = createBooking({
         variables: { name },
       });
 
@@ -43,24 +27,30 @@ const BookingForm = () => {
 
   return (
     <div>
-      <h3>Book an appointment</h3>
+      <Link className="btn btn-info btn-block py-3" type="submit" to="/book">
+        <button>Book an appointment</button>
+      </Link>
+      <h3>Reservation queue</h3>
+      <div>
+        <div className="container flex-column justify-space-between-lg justify-center align-center text-center">
+          {" "}
+        </div>
+      </div>
       <form
         className="flex-row justify-center justify-space-between-md align-center"
         onSubmit={handleFormSubmit}
       >
         <div className="col-12 col-lg-9">
           <input
-            placeholder="Add your booking name..."
+            placeholdercreate your booking name..."
             value={name}
             className="form-input w-100"
             onChange={(event) => setName(event.target.value)}
           />
-        </div>
-
-        <div className="col-12 col-lg-3">
-          <button className="btn btn-info btn-block py-3" type="submit">
-            Add booking
-          </button>
+           <label for="booking">
+          Enter a date and time for your appointment booking :
+        </label>
+        <input id="booking" type="datetime-local" name="bookingdate" />
         </div>
         {error && (
           <div className="col-12 my-3 bg-danger text-white p-3">

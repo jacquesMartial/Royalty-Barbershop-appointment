@@ -25,7 +25,7 @@ const Header = () => {
               alignContent: "center",
             }}
           >
-            DEATH ROW BARBERSHOP
+             BARBERSHOP
           </h1>
         </Link>
 

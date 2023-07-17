@@ -17,6 +17,7 @@ const typeDefs = gql`
     _id: ID!
     date: String!
     time: String!
+    name: String!
   }
 
   type Query {
@@ -28,7 +29,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createBooking(date: String!, time: String!): Booking
+    createBooking(date: String!, time: String!, name: String!): Booking
     addUser(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     removeUser: User

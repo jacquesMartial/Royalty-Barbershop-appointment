@@ -1,5 +1,5 @@
 const express = require("express");
-const { createServer } = require("http");
+//const { createServer } = require("http");
 const { ApolloServer, gql } = require("apollo-server-express");
 const { makeExecutableSchema } = require("@graphql-tools/schema");
 
@@ -11,7 +11,7 @@ const { typeDefs, resolvers } = require("./schemas/index");
   const app = express();
 
   //   create the http server using express
-  const httpServer = createServer(app);
+  // const httpServer = createServer(app);
 
   //   gql schema
   const schema = makeExecutableSchema({ typeDefs, resolvers });
@@ -23,11 +23,11 @@ const { typeDefs, resolvers } = require("./schemas/index");
   //   wrap the express server inside the apollo-gql server
   server.applyMiddleware({ app });
 
-  const PORT = 4444;
+  const PORT = 3001;
 
   //   we start the server when connected to db
   connection.once("open", () => {
-    httpServer.listen(PORT, () => {
+    app.listen(PORT, () => {
       console.log(`Server is running at http://localhost:${PORT}/graphql`);
     });
   });

@@ -12,7 +12,7 @@ const Footer = () => {
             &larr; Back
           </button>
         )}
-        <h4>&copy; {new Date().getFullYear()} - Death_Row Barbershop</h4>
+        <h4>&copy; {new Date().getFullYear()} - Barbershop</h4>
       </div>
     </footer>
   );
