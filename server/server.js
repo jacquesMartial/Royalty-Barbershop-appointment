@@ -1,34 +1,44 @@
 const express = require("express");
-//const { createServer } = require("http");
-const { ApolloServer, gql } = require("apollo-server-express");
-const { makeExecutableSchema } = require("@graphql-tools/schema");
+const { ApolloServer } = require("apollo-server-express");
+const path = require("path");
+const { authMiddleware } = require("./utils/auth");
 
-const connection = require("./config/connection");
-const { typeDefs, resolvers } = require("./schemas/index");
+const { typeDefs, resolvers } = require("./schemas");
+const db = require("./config/connection");
 
-(async function () {
-  // creating express app
-  const app = express();
+const PORT = process.env.PORT || 3001;
+const app = express();
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: authMiddleware,
+});
 
-  //   create the http server using express
-  // const httpServer = createServer(app);
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
-  //   gql schema
-  const schema = makeExecutableSchema({ typeDefs, resolvers });
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
+}
 
-  //   create and start the apollo server. we need to pass in the schema containgning the typedfs and resolvers
-  const server = new ApolloServer({ schema });
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+});
+
+// Create a new instance of an Apollo server with the GraphQL schema
+const startApolloServer = async () => {
   await server.start();
-
-  //   wrap the express server inside the apollo-gql server
   server.applyMiddleware({ app });
 
-  const PORT = 3001;
-
-  //   we start the server when connected to db
-  connection.once("open", () => {
+  db.once("open", () => {
     app.listen(PORT, () => {
-      console.log(`Server is running at http://localhost:${PORT}/graphql`);
+      console.log(`API server running on port ${PORT}!`);
+      console.log(
+        `Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`
+      );
     });
   });
-})();
+};
+
+// Call the async function to start the server
+startApolloServer();

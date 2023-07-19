@@ -1,25 +1,31 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 
 import { ADD_BOOKING } from "../../utils/mutations";
-import { QUERY_BOOKINGS } from "../../utils/queries";
+import { QUERY_ALLBOOKINGS } from "../../utils/queries";
 import { Link } from "react-router-dom";
 
 const BookingForm = () => {
   const [name, setName] = useState("");
-
-  const [createBooking, { error }] = useMutation(ADD_BOOKING
-  );
-
+  const { loading, data } = useQuery(QUERY_ALLBOOKINGS);
+  const [createBooking, { error }] = useMutation(ADD_BOOKING);
+  const bookingData = data?.allBookings || [];
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
     try {
-      const { data } = createBooking({
-        variables: { name },
-      });
+      let dateAndTime = document.querySelector("#booking").value;
+      console.log(dateAndTime);
+      dateAndTime = dateAndTime.split("T");
+      console.log(dateAndTime, name);
+      let time = dateAndTime[1];
+      let date = dateAndTime[0];
 
+      const { data } = createBooking({
+        variables: { name, time, date },
+      });
+      console.log(data);
       setName("");
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
@@ -27,30 +33,36 @@ const BookingForm = () => {
 
   return (
     <div>
-      <Link className="btn btn-info btn-block py-3" type="submit" to="/book">
-        <button>Book an appointment</button>
-      </Link>
-      <h3>Reservation queue</h3>
+      <h3>Bellow is our shop's reservation history book accordingly</h3>
+      <p>Availabilities 9am ~ 9:30am ~ 10am ~ 10:30am ~ 11am ~ 3pm ~ 4pm </p>
+      <ul>
+        {bookingData?.map((appointment) => {
+          return (
+            <li>
+              {appointment.name} booked an appointment for the{" "}
+              {appointment.date} at {appointment.time}{" "}
+            </li>
+          );
+        })}
+      </ul>
       <div>
         <div className="container flex-column justify-space-between-lg justify-center align-center text-center">
           {" "}
         </div>
       </div>
-      <form
-        className="flex-row justify-center justify-space-between-md align-center"
-        onSubmit={handleFormSubmit}
-      >
+      <form className="flex-row justify-center justify-space-between-md align-center">
         <div className="col-12 col-lg-9">
           <input
-            placeholdercreate your booking name..."
+            placeholder="Enter your name here"
             value={name}
             className="form-input w-100"
             onChange={(event) => setName(event.target.value)}
           />
-           <label for="booking">
-          Enter a date and time for your appointment booking :
-        </label>
-        <input id="booking" type="datetime-local" name="bookingdate" />
+          <br></br>
+          <label for="booking">Select your appointment date and time:</label>
+          <br></br>
+          <input id="booking" type="datetime-local" name="bookingdate" />
+          <button onClick={handleFormSubmit}> Book appointment</button>
         </div>
         {error && (
           <div className="col-12 my-3 bg-danger text-white p-3">

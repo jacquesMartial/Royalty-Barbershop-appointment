@@ -10,28 +10,42 @@ const Header = () => {
   };
   return (
     <header
-      className="bg-info text-dark mb-4 py-3 display-flex align-center"
+      className=""
       style={{
         width: "100%",
+        color: "black",
       }}
     >
-      <div className="container flex-column justify-space-between-lg justify-center align-center text-center">
-        <Link className="text-dark" to="/">
+      <div className="">
+        <Link className="" to="/">
           <h1
             className="m-0"
             style={{
               fontSize: "3rem",
-              backgroundColor: "royalblue",
               alignContent: "center",
+              borderStyle: "solid",
+              paddingBottom: "25px",
+              textAlign: "center",
+              backgroundColor: "violet",
+              color: "white",
             }}
           >
-             BARBERSHOP
+            ROYALTY BARBERSHOP
           </h1>
         </Link>
 
         <div>
           {Auth.loggedIn() ? (
-            <button className="btn btn-lg btn-light m-2" onClick={logout}>
+            <button
+              className="btn btn-lg btn-light m-2"
+              style={{
+                lineheight: "2.5",
+                padding: "0 20px",
+                textalign: "center",
+                color: "red",
+              }}
+              onClick={logout}
+            >
               Logout
             </button>
           ) : (

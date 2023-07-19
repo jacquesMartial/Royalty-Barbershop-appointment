@@ -18,3 +18,13 @@ export const QUERY_BOOKINGS = gql`
     }
   }
 `;
+export const QUERY_ALLBOOKINGS = gql`
+  query AllBookings {
+    allBookings {
+      _id
+      date
+      name
+      time
+    }
+  }
+`;

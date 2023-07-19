@@ -1,5 +1,5 @@
 const { User, Booking } = require("../models");
-
+const { signToken } = require("../utils/auth");
 const resolvers = {
   Query: {
     users: async () => {
@@ -8,6 +8,9 @@ const resolvers = {
     booking: async (parent, { _id }) => {
       const params = _id ? { _id } : {};
       return Booking.find(params);
+    },
+    allBookings: async (parent) => {
+      return Booking.find();
     },
     // By adding context to our query, we can retrieve the logged in user without specifically searching for them
     me: async (parent, args, context) => {
