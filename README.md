@@ -24,7 +24,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Links
 
-GitHub Repo url: https://github.com/jacquesMartial/appointment-booking.git
+GitHub Repo url: https://github.com/jacquesMartial/Royalty-Barbershop-appointment.git
 
 ## Technologies Used
 
